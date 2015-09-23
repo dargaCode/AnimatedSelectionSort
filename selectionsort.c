@@ -10,6 +10,9 @@
 #define COLOR_CYAN    "\x1b[36m"
 #define COLOR_RESET   "\x1b[0m"
 
+// constant
+#define MAX_LEN 200
+
 // prototypes
 bool is_valid(int arg_count, string args[]);
 
@@ -18,7 +21,7 @@ int main(int argc, string argv[])
     if (!is_valid(argc, argv))
     {
         printf(COLOR_RED);
-        printf("Usage: selectionsort <array length> \n");
+        printf("Usage: selectionsort <array size up to %i> \n", MAX_LEN);
         printf(COLOR_RESET);
         return 1;
     }
@@ -38,7 +41,7 @@ bool is_valid(int arg_count, string args[])
     }
     
     int len = atoi(args[1]);
-    if (len < 1)
+    if (len < 1 || len > MAX_LEN)
     {
         return false;
     }
