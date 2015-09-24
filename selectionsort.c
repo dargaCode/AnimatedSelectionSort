@@ -1,6 +1,7 @@
 #include <cs50.h>
 #include <stdio.h>
 #include <time.h>
+#include <string.h>
 
 // printf ANSI colors
 #define COLOR_RED     "\x1b[31m"
@@ -15,6 +16,9 @@
 #define MAX_ARRAY_LEN 200
 #define MAX_DELAY_DUR 1000
 #define MAX_ELEMENT_FACTOR 5
+
+// string
+#define VERBOSE_ARG "-v"
 
 // default global variables
 static int delay_duration = 0;
@@ -53,11 +57,12 @@ int main(int argc, string argv[])
 }
 
 /*
- * Must be exactly 2 args, and second must be positive int
+ * Make sure argument count and contents are acceptable
  */
 bool is_valid(int arg_count, string args[])
 {
-    if (arg_count < 2 || arg_count > 3)
+    // filename plus 1 required arg, two optional args
+    if (arg_count < 2 || arg_count > 4)
     {
         return false;
     }
@@ -70,7 +75,7 @@ bool is_valid(int arg_count, string args[])
     }
 
     // delay duration between actions
-    if (arg_count == 3)
+    if (arg_count > 2)
     {
         int delay = atoi(args[2]);
 
@@ -85,6 +90,24 @@ bool is_valid(int arg_count, string args[])
             delay_duration = delay;
         }
     }
+
+    // animate sequentially or in place
+    if (arg_count > 3)
+    {
+        string animation_style = args[3];
+
+        // matching verbose arg
+        if (strcmp(animation_style, VERBOSE_ARG) == 0)
+        {
+            verbose = true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    // success
     return true;
 }
 
