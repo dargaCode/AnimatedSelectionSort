@@ -182,21 +182,23 @@ void sort_array(int data[], int len)
             break;
         }
 
-        //preset smallest
-        int lowest = -10;
+        // preset smallest
+        int lowest = done;
 
         // inner loop
         for (int j = done; j < len; j++)
         {
             // new lowest
-            if (j == done || data[j] < data[lowest])
+            if (data[j] < data[lowest])
             {
                 lowest = j;
             }
             render_array(data, len, done, lowest, j);
         }
-        // TODO actually rearrange the array here
-
+        // swap the first unsorted element with lowest
+        int temp = data[done];
+        data[done] = data[lowest];
+        data[lowest] = temp;
     }
     // show one last render of all done
     render_array(data, len, len, -10, -10);
