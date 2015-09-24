@@ -102,7 +102,8 @@ void delay_ms(int milliseconds)
   */
  void render_array(int data[], int len, int done, int low, int active)
  {
-    for (int i = 0; i < len; i++)
+    // include one extra loop to draw ] on final element
+    for (int i = 0; i <= len; i++)
     {
         // prepend element with blank space or bracket
         if (i == active)
@@ -131,8 +132,11 @@ void delay_ms(int milliseconds)
         {
             printf(COLOR_MAGENTA);
         }
-        // print the actual element
-        printf("%i", data[i]);
+        // print the actual element, but leave off the extra
+        if (i < len)
+        {
+            printf("%i", data[i]);
+        }
         printf(COLOR_RESET);
     }
     printf("\n");
@@ -153,10 +157,14 @@ void sort_array(int data[], int len)
 
         for (int j = done; j < len; j++)
         {
-            render_array(data, len, done, -10, j);
+            // last item will always be sorted by default
+            if (len - done > 1)
+            {
+                render_array(data, len, done, -10, j);
+            }
         }
     }
-    // show one last render of all green
+    // show one last render of all done
     render_array(data, len, len, -10, -10);
 }
 
