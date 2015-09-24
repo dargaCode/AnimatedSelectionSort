@@ -148,6 +148,7 @@ void delay_ms(int milliseconds)
   */
 void sort_array(int data[], int len)
 {
+    // outer loops
     for (int i = 0; i < len; i++)
     {
         int done = i;
@@ -155,14 +156,27 @@ void sort_array(int data[], int len)
         // show starting state for this loop
         render_array(data, len, done, -10, -10);
 
+        // last item will always be sorted by default
+        if (done == len - 1)
+        {
+            break;
+        }
+
+        //preset smallest
+        int lowest = -10;
+
+        // inner loop
         for (int j = done; j < len; j++)
         {
-            // last item will always be sorted by default
-            if (len - done > 1)
+            // new lowest
+            if (j == done || data[j] < data[lowest])
             {
-                render_array(data, len, done, -10, j);
+                lowest = j;
             }
+            render_array(data, len, done, lowest, j);
         }
+        // TODO actually rearrange the array here
+
     }
     // show one last render of all done
     render_array(data, len, len, -10, -10);
