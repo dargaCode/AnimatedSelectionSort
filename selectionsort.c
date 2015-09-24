@@ -20,6 +20,7 @@ bool is_valid(int arg_count, string args[]);
 void randomize_array(int data[], int len);
 void render_array(int data[], int len, int done, int low, int active);
 void delay_ms(int milliseconds);
+void sort_array(int data[], int len);
 
 int main(int argc, string argv[])
 {
@@ -38,7 +39,8 @@ int main(int argc, string argv[])
     // remove buffer from stdout (enables printf to display
     // partial lines without flushing the buffer.
     setbuf(stdout, NULL);
-    render_array(data, len, 2, 5, 8);
+ 
+    sort_array(data, len);
 
     // success
     return 0;
@@ -136,3 +138,25 @@ void delay_ms(int milliseconds)
     printf("\n");
     delay_ms(500);
  }
+
+ /*
+  * Sort the array
+  */
+void sort_array(int data[], int len)
+{
+    for (int i = 0; i < len; i++)
+    {
+        int done = i;
+
+        // show starting state for this loop
+        render_array(data, len, done, -10, -10);
+
+        for (int j = done; j < len; j++)
+        {
+            render_array(data, len, done, -10, j);
+        }
+    }
+    // show one last render of all green
+    render_array(data, len, len, -10, -10);
+}
+
