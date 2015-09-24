@@ -85,7 +85,6 @@ bool is_valid(int arg_count, string args[])
         }
         else
         {
-            printf("%i \n", delay);
             // assign to global variable
             delay_duration = delay;
         }
