@@ -100,12 +100,39 @@ void delay_ms(int milliseconds)
   */
  void render_array(int data[], int len, int done, int low, int active)
  {
-
     for (int i = 0; i < len; i++)
     {
-        printf(" %i", data[i]);
+        // prepend element with blank space or bracket
+        if (i == active)
+        {
+            printf(COLOR_YELLOW);
+            printf("[");
+            printf(COLOR_RESET);
+        }
+        else if (i == active + 1)
+        {
+            printf(COLOR_YELLOW);
+            printf("]");
+            printf(COLOR_RESET);
+        }
+        else
+        {
+            printf(" ");
+        }
+
+        // establish element color
+        if (i < done)
+        {
+            printf(COLOR_CYAN);
+        }
+        else if (i == low)
+        {
+            printf(COLOR_MAGENTA);
+        }
+        // print the actual element
+        printf("%i", data[i]);
+        printf(COLOR_RESET);
     }
     printf("\n");
     delay_ms(500);
  }
-
