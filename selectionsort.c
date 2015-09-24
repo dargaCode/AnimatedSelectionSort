@@ -19,9 +19,11 @@
 bool is_valid(int arg_count, string args[]);
 void randomize_array(int data[], int len);
 void render_array(int data[], int len);
+void delay_ms(int milliseconds);
 
 int main(int argc, string argv[])
 {
+    // failure
     if (!is_valid(argc, argv))
     {
         printf(COLOR_RED);
@@ -33,6 +35,9 @@ int main(int argc, string argv[])
     int len = atoi(argv[1]);
     int data[len];
     randomize_array(data, len);
+    // remove buffer from stdout (enables printf to display
+    // partial lines without flushing the buffer.
+    setbuf(stdout, NULL);
     render_array(data, len);
 
     // success
@@ -77,9 +82,31 @@ bool is_valid(int arg_count, string args[])
   */
  void render_array(int data[], int len)
  {
+
     for (int i = 0; i < len; i++)
     {
+        delay_ms(500);
+
         printf(" %i", data[i]);
     }
+    delay_ms(500);
     printf("\n");
  }
+
+ /*
+  * Create a delay for a given number of milliseconds
+  */
+void delay_ms(int milliseconds)
+{
+    //tick vars
+    clock_t start = clock();
+    clock_t now = clock();
+
+    // convert milliseconds to ticks
+    long delay = milliseconds * (CLOCKS_PER_SEC / 1000);
+
+    while (now < start + delay)
+    {
+        now = clock();
+    }
+}
