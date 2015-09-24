@@ -16,7 +16,9 @@
 #define MAX_DELAY_DUR 1000
 #define MAX_ELEMENT_FACTOR 5
 
+// default global variables
 static int delay_duration = 0;
+static bool verbose = false;
 
 // prototypes
 bool is_valid(int arg_count, string args[]);
@@ -60,12 +62,14 @@ bool is_valid(int arg_count, string args[])
         return false;
     }
 
+    // length of array to sort
     int len = atoi(args[1]);
     if (len < 1 || len > MAX_ARRAY_LEN)
     {
         return false;
     }
 
+    // delay duration between actions
     if (arg_count == 3)
     {
         int delay = atoi(args[2]);
@@ -122,6 +126,12 @@ void delay_ms(int milliseconds)
   */
  void render_array(int data[], int len, int done, int low, int active)
  {
+    // animate in place or print sequentially
+    if (!verbose)
+    {
+        system("clear");
+    }
+
     // include one extra loop to draw ] on final element
     for (int i = 0; i <= len; i++)
     {
