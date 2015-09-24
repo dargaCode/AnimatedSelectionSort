@@ -13,7 +13,10 @@
 
 // constant
 #define MAX_ARRAY_LEN 200
+#define MAX_DELAY_DUR 1000
 #define MAX_ELEMENT_FACTOR 5
+
+static int delay_duration = 0;
 
 // prototypes
 bool is_valid(int arg_count, string args[]);
@@ -28,7 +31,8 @@ int main(int argc, string argv[])
     if (!is_valid(argc, argv))
     {
         printf(COLOR_RED);
-        printf("Usage: selectionsort <array size up to %i> \n", MAX_ARRAY_LEN);
+        printf("Usage: selectionsort <size 1-%i> ", MAX_ARRAY_LEN);
+        printf("(delay in ms 1-%i) \n", MAX_DELAY_DUR);
         printf(COLOR_RESET);
         return 1;
     }
@@ -39,7 +43,7 @@ int main(int argc, string argv[])
     // remove buffer from stdout (enables printf to display
     // partial lines without flushing the buffer.
     setbuf(stdout, NULL);
- 
+
     sort_array(data, len);
 
     // success
@@ -51,7 +55,7 @@ int main(int argc, string argv[])
  */
 bool is_valid(int arg_count, string args[])
 {
-    if (arg_count != 2)
+    if (arg_count < 2 || arg_count > 3)
     {
         return false;
     }
@@ -60,6 +64,22 @@ bool is_valid(int arg_count, string args[])
     if (len < 1 || len > MAX_ARRAY_LEN)
     {
         return false;
+    }
+
+    if (arg_count == 3)
+    {
+        int delay = atoi(args[2]);
+
+        if (delay < 1 || delay > 1000)
+        {
+            return false;
+        }
+        else
+        {
+            printf("%i \n", delay);
+            // assign to global variable
+            delay_duration = delay;
+        }
     }
     return true;
 }
@@ -140,7 +160,7 @@ void delay_ms(int milliseconds)
         printf(COLOR_RESET);
     }
     printf("\n");
-    delay_ms(500);
+    delay_ms(delay_duration);
  }
 
  /*
